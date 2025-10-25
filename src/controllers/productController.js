@@ -19,7 +19,8 @@ const uploadToCloudinary = async (file) => {
 // Create product
 exports.createProduct = async (req, res, next) => {
     try {
-        const { name, sku, description, price, status, brandId, categoryIds, storeIds } = req.body;
+        let { name, sku, description, price, status, brandId, categoryIds, storeIds } = req.body;
+        status = status ? status.trim() : 'active';
 
         if (!name || !sku || !price || !brandId) {
             return res.status(400).json({
