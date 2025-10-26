@@ -25,8 +25,11 @@ module.exports = (sequelize) => {
             allowNull: false
         },
         role: {
-            type: DataTypes.ENUM('admin', 'super_admin'),
-            defaultValue: 'admin'
+            type: DataTypes.ENUM('super_admin', 'admin'),
+            defaultValue: 'admin',
+            validate: {
+                isIn: [['super_admin', 'admin']]
+            }
         },
         isActive: {
             type: DataTypes.BOOLEAN,
