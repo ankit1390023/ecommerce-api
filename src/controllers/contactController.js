@@ -45,11 +45,6 @@ exports.sendMessageToSuperAdmin = async (req, res, next) => {
             message: 'Message sent to Super Admin successfully'
         });
     } catch (error) {
-        console.error('❌ Email error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Failed to send email',
-            error: error.message
-        });
+        next(error);
     }
 };
