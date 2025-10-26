@@ -31,43 +31,6 @@ exports.getUsers = async (req, res, next) => {
     }
 };
 
-// Create new user (Admin only)
-exports.createUser = async (req, res, next) => {
-    try {
-        const { name, email, password, role } = req.body;
-
-        if (!name || !email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: 'Please provide all required fields'
-            });
-        }
-
-        const existingUser = await UserModel.findOne({ where: { email } });
-        if (existingUser) {
-            return res.status(400).json({
-                success: false,
-                message: 'User already exists with this email'
-            });
-        }
-
-        const user = await UserModel.create({
-            name,
-            email,
-            password,
-            role: role || 'admin'
-        });
-
-        res.status(201).json({
-            success: true,
-            message: 'User created successfully',
-            data: { user }
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
 // Get user by ID
 exports.getUserById = async (req, res, next) => {
     try {
@@ -136,27 +99,3 @@ exports.updateUser = async (req, res, next) => {
     }
 };
 
-// Delete user
-exports.deleteUser = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const user = await UserModel.findByPk(id);
-
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User not found'
-            });
-        }
-
-        await user.destroy();
-
-        res.json({
-            success: true,
-            message: 'User deleted successfully'
-        });
-    } catch (error) {
-        next(error);
-    }
-};

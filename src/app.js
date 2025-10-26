@@ -23,7 +23,7 @@ app.use('/api/products', require('./routes/product'));
 app.use('/api/cart', require('./routes/cart'));
 app.use('/api/orders', require('./routes/order'));
 app.use('/api/payments', require('./routes/payment'));
-
+app.use('/api/contact', require('./routes/contact'));
 // Health check
 app.get('/health', (req, res) => {
     res.json({ success: true, message: 'Server is running' });
