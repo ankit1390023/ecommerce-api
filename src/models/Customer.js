@@ -59,5 +59,21 @@ module.exports = (sequelize) => {
         return values;
     };
 
+    // Define associations
+    Customer.associate = (models) => {
+        Customer.hasMany(models.Address, { 
+            foreignKey: 'customerId', 
+            as: 'addresses' 
+        });
+        Customer.hasMany(models.Order, { 
+            foreignKey: 'customerId',
+            as: 'orders'
+        });
+        Customer.hasMany(models.Cart, {
+            foreignKey: 'customerId',
+            as: 'cartItems'
+        });
+    };
+
     return Customer;
 };

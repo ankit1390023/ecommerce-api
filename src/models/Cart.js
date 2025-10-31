@@ -43,5 +43,17 @@ module.exports = (sequelize) => {
         ]
     });
 
+    // Define associations
+    Cart.associate = (models) => {
+        Cart.belongsTo(models.Customer, { 
+            foreignKey: 'customerId', 
+            as: 'customer' 
+        });
+        Cart.belongsTo(models.Product, { 
+            foreignKey: 'productId', 
+            as: 'product' 
+        });
+    };
+
     return Cart;
 };

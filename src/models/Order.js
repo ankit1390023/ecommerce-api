@@ -65,5 +65,21 @@ module.exports = (sequelize) => {
         timestamps: true
     });
 
+    // Define associations
+    Order.associate = (models) => {
+        Order.belongsTo(models.Customer, { 
+            foreignKey: 'customerId', 
+            as: 'customer' 
+        });
+        Order.belongsTo(models.Address, { 
+            foreignKey: 'addressId', 
+            as: 'address' 
+        });
+        Order.hasMany(models.OrderItem, { 
+            foreignKey: 'orderId', 
+            as: 'items' 
+        });
+    };
+
     return Order;
 };

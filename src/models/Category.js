@@ -42,5 +42,18 @@ module.exports = (sequelize) => {
         ]
     });
 
+    // Define associations
+    Category.associate = (models) => {
+        Category.belongsToMany(models.Product, {
+            through: models.ProductCategory,
+            foreignKey: 'categoryId',
+            as: 'products'
+        });
+        Category.belongsTo(models.User, { 
+            foreignKey: 'createdBy', 
+            as: 'creator' 
+        });
+    };
+
     return Category;
 };

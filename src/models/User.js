@@ -62,5 +62,21 @@ module.exports = (sequelize) => {
         return values;
     };
 
+    // Define associations
+    User.associate = (models) => {
+        User.hasMany(models.Brand, { 
+            foreignKey: 'createdBy', 
+            as: 'brands' 
+        });
+        User.hasMany(models.Category, { 
+            foreignKey: 'createdBy', 
+            as: 'categories' 
+        });
+        User.hasMany(models.Store, { 
+            foreignKey: 'userId', 
+            as: 'stores' 
+        });
+    };
+
     return User;
 };

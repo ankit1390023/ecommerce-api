@@ -46,5 +46,40 @@ module.exports = (sequelize) => {
         timestamps: true
     });
 
+    // Define associations
+    Product.associate = (models) => {
+        // Product belongs to Brand
+        Product.belongsTo(models.Brand, { 
+            foreignKey: 'brandId', 
+            as: 'brand' 
+        });
+
+        // Product belongs to many Categories
+        Product.belongsToMany(models.Category, {
+            through: models.ProductCategory,
+            foreignKey: 'productId',
+            as: 'categories'
+        });
+
+        // Product belongs to many Stores with additional attributes
+        Product.belongsToMany(models.Store, {
+            through: models.ProductStore,
+            foreignKey: 'productId',
+            as: 'stores'
+        });
+
+        // Product has many OrderItems
+        Product.hasMany(models.OrderItem, {
+            foreignKey: 'productId',
+            as: 'orderItems'
+        });
+
+        // Product has many Carts
+        Product.hasMany(models.Cart, {
+            foreignKey: 'productId',
+            as: 'carts'
+        });
+    };
+
     return Product;
 };

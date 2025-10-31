@@ -69,5 +69,18 @@ module.exports = (sequelize) => {
         timestamps: true
     });
 
+    // Define associations
+    Store.associate = (models) => {
+        Store.belongsToMany(models.Product, {
+            through: models.ProductStore,
+            foreignKey: 'storeId',
+            as: 'products'
+        });
+        Store.belongsTo(models.User, { 
+            foreignKey: 'userId', 
+            as: 'owner' 
+        });
+    };
+
     return Store;
 };

@@ -57,5 +57,17 @@ module.exports = (sequelize) => {
         timestamps: true
     });
 
+    // Define associations
+    Address.associate = (models) => {
+        Address.belongsTo(models.Customer, { 
+            foreignKey: 'customerId', 
+            as: 'customer' 
+        });
+        Address.hasMany(models.Order, {
+            foreignKey: 'addressId',
+            as: 'orders'
+        });
+    };
+
     return Address;
 };
